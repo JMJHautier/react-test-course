@@ -10,7 +10,7 @@ test('button has correct initial color', () => {
 
   fireEvent.click(button);
   expect(button).toHaveStyle({backgroundColor:'MidnightBlue'});
-  expect(button.textContent).toBe('Change to Medium Violet Red');
+  expect(button.textContent).tàoBe('Change to Medium Violet Red');
 
 });
 
@@ -18,12 +18,8 @@ test('button has correct initial color', () => {
 test('button has correct uncheck status', () => {
   render(<App />);
   const button = screen.getByRole('button', {name:'Change to Midnight Blue'})
-  expect(button).toBeEnabled();
-
-  const checkbox = screen.getByRole('checkbox');
-
+  expect(button).toBeEnabled()
 })
-
 test('checkbox disables button on first click and reables button on second click', () => {
   render(<App />);
   const checkbox = screen.getByRole('checkbox', {name: 'Disable button'});
