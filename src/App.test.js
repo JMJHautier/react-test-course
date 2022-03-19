@@ -1,22 +1,23 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import App from './App';
+import {replaceCamelWithSpaces} from './App'
 
 test('button has correct initial color', () => {
   render(<App />);
   // find element with role of button and text change
-  const button = screen.getByRole('button', {name:'Change to blue'})
-  expect(button).toHaveStyle({backgroundColor:'red'})
+  const button = screen.getByRole('button', {name:'Change to Midnight Blue'})
+  expect(button).toHaveStyle({backgroundColor:'MediumVioletRed'})
 
   fireEvent.click(button);
-  expect(button).toHaveStyle({backgroundColor:'blue'});
-  expect(button.textContent).toBe('Change to red');
+  expect(button).toHaveStyle({backgroundColor:'MidnightBlue'});
+  expect(button.textContent).toBe('Change to Medium Violet Red');
 
 });
 
 
 test('button has correct uncheck status', () => {
   render(<App />);
-  const button = screen.getByRole('button', {name:'Change to blue'})
+  const button = screen.getByRole('button', {name:'Change to Midnight Blue'})
   expect(button).toBeEnabled();
 
   const checkbox = screen.getByRole('checkbox');
@@ -42,7 +43,7 @@ test('disabling the button turns its grey, enabling the button turns it red', ()
   render(<App />);
   const button = screen.getByRole('button');
   const checkbox = screen.getByRole('checkbox', {name:'Disable button'})
-  expect(button).toHaveStyle({color:'red'})
+  expect(button).toHaveStyle({color:'MediumVioletRed'})
   expect(button).toBeEnabled()
 
   fireEvent.click(checkbox)
@@ -50,8 +51,24 @@ test('disabling the button turns its grey, enabling the button turns it red', ()
   expect(button).toBeDisabled()
 
   fireEvent.click(checkbox)
-  expect(button).toHaveStyle({color:'red'})
+  expect(button).toHaveStyle({color:'MediumVioletRed'})
   expect(button).toBeEnabled()
 
 
+})
+
+
+describe('spaces before camel-case capital letters', () => {
+
+  test('Works for no inner capital letters', () => {
+    expect(replaceCamelWithSpaces('Red')).toBe('Red')
+  })
+  test('Works for one inner capital letter', () => {
+    expect(replaceCamelWithSpaces('MidnightBlue')).toBe('Midnight Blue')
+
+  })
+  test('Works for multiple inner capital letters', () => {
+    expect(replaceCamelWithSpaces('MediumVioletRed')).toBe('Medium Violet Red')
+
+  })
 })
